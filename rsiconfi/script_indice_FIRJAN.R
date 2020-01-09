@@ -1,3 +1,6 @@
+# Fernando A Barbalho
+# @barbalhofernand 
+
 # install.packages("devtools")
 #devtools::install_github("tchiluanda/rsiconfi")
 
