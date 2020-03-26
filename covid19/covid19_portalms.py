@@ -7,6 +7,12 @@
 # Captura dados da covid-19 disponibilizados pelo Ministério da Saúde em https://covid.saude.gov.br/
 #
 
+# Instale:
+# pip3 install requests
+# pip3 install pandas
+# pip3 install xlrd
+# pip3 install openpyxl
+
 
 import requests
 import pandas as pd
@@ -45,11 +51,14 @@ for pagina in regioes["results"]:
     conteudo.append(dicionario)
 
 df_regioes = pd.DataFrame(conteudo)
+
+# Escolha salvar em CSV ou XLSX
 df_regioes.to_csv('casos_regioes.csv',index=False)
+df_regioes.to_excel('casos_regioes.xlsx', sheet_name='Sheet1', index=False)
 
 
 
-# CAPTURA ACUMULO
+# CAPTURA ACUMULO - DIAS
 response = requests.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalAcumulo', headers=headers)
 
 acumulo = response.json()
@@ -68,7 +77,10 @@ for pagina in acumulo["results"]:
     conteudo.append(dicionario)
 
 df_acumulado = pd.DataFrame(conteudo)
+
+# Escolha salvar em CSV ou XLSX
 df_acumulado.to_csv('casos_acumulados.csv',index=False)
+df_acumulado.to_excel('casos_acumulados.xlsx', sheet_name='Sheet1', index=False)
 
 
 # CAPTURA POR ESTADOS
@@ -92,4 +104,88 @@ for pagina in estados["results"]:
     conteudo.append(dicionario)
 
 df_estados = pd.DataFrame(conteudo)
+
+# Escolha salvar em CSV ou XLSX
 df_estados.to_csv('casos_estados.csv',index=False)
+df_estados.to_excel('casos_estados.xlsx', sheet_name='Sheet1', index=False)
+
+
+
+# CAPTURA POR SEMANA EPIDEMIOLÓGICA
+response = requests.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalSemana', headers=headers)
+
+semanas = response.json()
+
+conteudo = []
+
+for pagina in semanas["results"]:
+    dicionario = {
+                "objectId": pagina.get('objectId'), 
+                "label": pagina.get('label'), 
+                "qtd_confirmado": pagina.get('qtd_confirmado'), 
+                "qtd_obito": pagina.get('qtd_obito'), 
+                "createdAt": pagina.get('createdAt'), 
+                "updatedAt": pagina.get('updatedAt')
+                }
+
+    conteudo.append(dicionario)
+
+df_semanas = pd.DataFrame(conteudo)
+
+# Escolha salvar em CSV ou XLSX
+df_semanas.to_csv('casos_semanas.csv',index=False)
+df_semanas.to_excel('casos_semanas.xlsx', sheet_name='Sheet1', index=False)
+
+
+
+# CAPTURA POR DIAS
+response = requests.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalDias', headers=headers)
+
+dias = response.json()
+
+conteudo = []
+
+for pagina in dias["results"]:
+    dicionario = {
+                "objectId": pagina.get('objectId'), 
+                "label": pagina.get('label'), 
+                "qtd_confirmado": pagina.get('qtd_confirmado'), 
+                "createdAt": pagina.get('createdAt'), 
+                "updatedAt": pagina.get('updatedAt')
+                }
+
+    conteudo.append(dicionario)
+
+df_dias = pd.DataFrame(conteudo)
+
+# Escolha salvar em CSV ou XLSX
+df_dias.to_csv('casos_dias.csv',index=False)
+df_dias.to_excel('casos_dias.xlsx', sheet_name='Sheet1', index=False)
+
+
+
+
+# CAPTURA GERAL - DA SOMA TOTAL
+response = requests.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeral', headers=headers)
+
+geral = response.json()
+
+conteudo = []
+
+for pagina in geral["results"]:
+    dicionario = {
+                "objectId": pagina.get('objectId'), 
+                "total_confirmado": pagina.get('total_confirmado'), 
+                "createdAt": pagina.get('createdAt'), 
+                "total_obitos": pagina.get('total_obitos'),
+                "versao": pagina.get('versao'),
+                "dt_atualizacao": pagina.get('dt_atualizacao'),
+                }
+
+    conteudo.append(dicionario)
+
+df_geral = pd.DataFrame(conteudo)
+
+# Escolha salvar em CSV ou XLSX
+df_geral.to_csv('casos_geral.csv',index=False)
+df_geral.to_excel('casos_geral.xlsx', sheet_name='Sheet1', index=False)
