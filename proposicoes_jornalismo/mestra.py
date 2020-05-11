@@ -66,9 +66,9 @@ def camara(dia_anterior,mes_anterior,ano_anterior,dia_hoje,mes_hoje,ano_hoje):
   		parametros = {'formato': 'json', 'itens': 100, 'pagina': pagina}
   		resposta = requests.get(url, parametros)
 
-	# Captura os dados          
-	for vez in resposta.json()['dados']:
-  		dicionario = {"id": str(vez['id']).strip(), 
+	    # Captura os dados          
+	    for vez in resposta.json()['dados']:
+        dicionario = {"id": str(vez['id']).strip(), 
                           "uri": str(vez['uri']).strip(), 
                           "siglaTipo": str(vez['siglaTipo']).strip(), 
                           "codTipo": str(vez['codTipo']).strip(), 
@@ -76,7 +76,7 @@ def camara(dia_anterior,mes_anterior,ano_anterior,dia_hoje,mes_hoje,ano_hoje):
                           "ano": str(vez['ano']).strip(), 
                           "ementa": str(vez['ementa']).strip()
                           }
-  		proposicoes.append(dicionario)
+  		  proposicoes.append(dicionario)
 
 	df_proposicoes_api = pd.DataFrame(proposicoes)
 	#df_proposicoes_api.info()
@@ -139,7 +139,7 @@ def camara(dia_anterior,mes_anterior,ano_anterior,dia_hoje,mes_hoje,ano_hoje):
     id = row['id']
 
   	url = endpoint + id
-  	print(url)
+  	#print(url)
 
   	# captura os dados de detalhes
   	try:
@@ -669,8 +669,8 @@ def senado(ano_anterior, mes_anterior, dia_anterior):
 ### FUNÇÃO PARA TERMOS DE INTERESSE
 def jornal(dados, origem):
 	# Define termos de interesse
-	search_list = ["JORNALISMO", "JORNALISTA", "JORNALISTAS", "COMUNICADORES", "IMPRENSA", "VERIFICADORES DE FATOS", "CHECAGEM DE FATOS", "FAKE NEWS", "DESINFORMAÇÃO", "TRANSPARÊNCIA NA INTERNET"]
-	#dados.info()
+	search_list = ["JORNALISMO", "JORNALISTA", "JORNALISTAS", "COMUNICADORES", "IMPRENSA", "VERIFICADORES DE FATOS", "CHECAGEM DE FATOS", "FAKE NEWS", "DESINFORMAÇÃO", "TRANSPARÊNCIA NA INTERNET", "RADIODIFUSÃO"]
+
 	mask = dados['ementa_copia'].str.contains('|'.join(search_list))
 	seleciona = dados[mask]
 	return seleciona
@@ -719,13 +719,15 @@ def frases(dados, origem):
     elif 'comunicadores' in proposicao_ementa:
       sentencas['texto5/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre ccomunicadores e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
     elif 'imprensa' in proposicao_ementa:
-      sentencas['texto5_1/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre imprensa e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
+      sentencas['texto6/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre imprensa e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
     elif 'notícias falsas' in proposicao_ementa or 'fake news' in proposicao_ementa:
-      sentencas['texto5_1/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre fake news ou notícias falsas e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
+      sentencas['texto7/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre fake news ou notícias falsas e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
     elif 'verificadores de fatos' in proposicao_ementa or 'checagem de fatos' in proposicao_ementa:
-      sentencas['texto5_1/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre verificadores de fatos ou checagem de fatos e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
+      sentencas['texto8/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre verificadores de fatos ou checagem de fatos e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
     elif 'transparência na internet' in proposicao_ementa:
-      sentencas['texto5_1/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre transparência na internet e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
+      sentencas['texto9/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre transparência na internet e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
+    elif 'radiodifusão' in proposicao_ementa:
+      sentencas['texto10/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre radiodifusão e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
 
     
     #print(sentencas)
@@ -787,7 +789,7 @@ def mandamail(dados):
   server.ehlo()
   server.starttls()
   server.ehlo()
-  server.login('seu email no google', 'sua senha')  # use your real gmail account user name and password
+  server.login('seu email do gmail', 'sua senha')  # use your real gmail account user name and password
   server.send_message(msg)
   server.quit()
 
@@ -822,7 +824,6 @@ def main():
   if tamanho != 0:
     nome = "resultados/" + dia_anterior + "_" + mes_anterior + "_" + ano_anterior + "_" + "proposicoes_camara_jornalismo"
     prop_cam.to_csv(f'{nome}.csv',index=False)
-
 
     df_lista_sentencas = frases(prop_cam, 'camara')
    	#print(df_lista_sentencas)
