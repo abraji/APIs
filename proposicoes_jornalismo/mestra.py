@@ -681,7 +681,7 @@ def jornal(dados, origem):
 ### CRIA FRASES
 def frases(dados, origem):
   lista_sentencas = []
-
+  #dados.info()
 	conta = 1
 	for num, row in dados.iterrows():
 
@@ -695,7 +695,7 @@ def frases(dados, origem):
     			endereco = row['UrlTexto']
     			nome = row['NomeAutor']
     			casa = 'SENADO'
-          pagina = "https://www.camara.leg.br/propostas-legislativas/" + str(row['id'])
+          pagina = "https://www25.senado.leg.br/web/atividade/materias/-/materia/" + str(row['CodigoMateria'])
     elif origem == 'camara':
     			proposicao_ementa = row['ementa_minuscula']
     			proposicao_tipo = row['siglaTipo']
@@ -789,7 +789,7 @@ def mandamail(dados):
   server.ehlo()
   server.starttls()
   server.ehlo()
-  server.login('seu email do gmail', 'sua senha')  # use your real gmail account user name and password
+  server.login('seu e-mail do gmail', 'senha')   # use your real gmail account user name and password
   server.send_message(msg)
   server.quit()
 
