@@ -7,7 +7,7 @@
 # Envia um e-mail de alerta para endereços de escolha
 # 
 
-import requests
+import requests 
 import pandas as pd
 import time
 from datetime import datetime, timedelta
@@ -669,7 +669,7 @@ def senado(ano_anterior, mes_anterior, dia_anterior):
 ### FUNÇÃO PARA TERMOS DE INTERESSE
 def jornal(dados, origem):
 	# Define termos de interesse
-	search_list = ["JORNALISMO", "JORNALISTA", "JORNALISTAS", "COMUNICADORES", "IMPRENSA", "VERIFICADORES DE FATOS", "CHECAGEM DE FATOS", "FAKE NEWS", "DESINFORMAÇÃO", "TRANSPARÊNCIA NA INTERNET", "RADIODIFUSÃO"]
+	search_list = ["JORNALISMO", "JORNALISTA", "JORNALISTAS", "COMUNICADORES", "IMPRENSA", "VERIFICADORES DE FATOS", "CHECAGEM DE FATOS", "FAKE NEWS", "DESINFORMAÇÃO", "TRANSPARÊNCIA NA INTERNET", "RADIODIFUSÃO", "LIBERDADE DE EXPRESSÃO"]
 
 	mask = dados['ementa_copia'].str.contains('|'.join(search_list))
 	seleciona = dados[mask]
@@ -720,6 +720,8 @@ def frases(dados, origem):
       sentencas['texto5/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre ccomunicadores e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
     elif 'imprensa' in proposicao_ementa:
       sentencas['texto6/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre imprensa e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
+    elif 'desinformação' in proposicao_ementa:
+      sentencas['texto11/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre desinformação e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
     elif 'notícias falsas' in proposicao_ementa or 'fake news' in proposicao_ementa:
       sentencas['texto7/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre fake news ou notícias falsas e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
     elif 'verificadores de fatos' in proposicao_ementa or 'checagem de fatos' in proposicao_ementa:
@@ -789,7 +791,7 @@ def mandamail(dados):
   server.ehlo()
   server.starttls()
   server.ehlo()
-  server.login('seu e-mail do gmail', 'senha')   # use your real gmail account user name and password
+  server.login('robojornalista@gmail.com', '5ZAD9U8ftEfiT9X')   # use your real gmail account user name and password
   server.send_message(msg)
   server.quit()
 
