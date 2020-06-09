@@ -791,7 +791,7 @@ def mandamail(dados):
   server.ehlo()
   server.starttls()
   server.ehlo()
-  server.login('robojornalista@gmail.com', '5ZAD9U8ftEfiT9X')   # use your real gmail account user name and password
+  server.login('seuemail', 'suasenha')   # use your real gmail account user name and password
   server.send_message(msg)
   server.quit()
 
