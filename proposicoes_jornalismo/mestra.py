@@ -730,6 +730,8 @@ def frases(dados, origem):
       sentencas['texto9/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre transparência na internet e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
     elif 'radiodifusão' in proposicao_ementa:
       sentencas['texto10/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre radiodifusão e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
+    elif 'liberdade de expressão' in proposicao_ementa:
+      sentencas['texto12/' + str(conta)] = f'{casa}: {proposicao_tipo} {proposicao_numero}/{proposicao_ano}, de autoria de {nome}, fala sobre liberdade de expressão e sofreu alterações em sua tramitação. Tramitação: {tramitacao}. Situação: {status}. Página: {pagina}. Teor: {endereco}'
 
     
     #print(sentencas)
@@ -791,7 +793,7 @@ def mandamail(dados):
   server.ehlo()
   server.starttls()
   server.ehlo()
-  server.login('seuemail', 'suasenha')   # use your real gmail account user name and password
+  server.login('robojornalista@gmail.com', '5ZAD9U8ftEfiT9X')   # use your real gmail account user name and password
   server.send_message(msg)
   server.quit()
 
