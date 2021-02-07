@@ -15,9 +15,10 @@ import time
 payload = {}
 
 # A key Bearer precisa ser renovada a cada 3.600 segundos em https://apilib.prefeitura.sp.gov.br
+# Colocar a sua no xxxxxxxxxxxxxxxxxxxxxx
 headers = {
   'accept': 'application/json',
-  'Authorization': 'Bearer ea3ddfb1-9377-33c3-9469-4e7f2d6a33c8'
+  'Authorization': 'Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 }
 
 
